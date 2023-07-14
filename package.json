@@ -1,13 +1,13 @@
 {
-  "name": "dgtl-handyjs",
+  "name": "@dgtlworkshop/handyjs",
   "version": "1.0.0",
-  "description": "A collection of handy functions and reference types used across DGTL Javascript projects",
+  "description": "A collection of handy functions and reference types used across DGTL's Javascript projects",
   "type": "module",
   "files": [
     "dist"
   ],
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
