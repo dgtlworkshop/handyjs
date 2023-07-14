@@ -40,10 +40,6 @@ export function clamp(num: number, min: number, max: number) {
 	return Math.min(Math.max(num, min), max);
 }
 
-export function pickRandomFromArray<T>(array: ReadonlyArray<T>): T {
-	return array[Math.floor(Math.random() * array.length)];
-}
-
 export function getRandomPositionWithinRectangle(
 	rectangle: Readonly<iRectangle> | Readonly<iPositionedRectangle>,
 	integer = false,
