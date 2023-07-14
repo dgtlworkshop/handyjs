@@ -74,3 +74,50 @@ export function formatDateToMMMDD(date: Date, ianatz?: string) {
 export function formatDateToMMMDDYY(date: Date, ianatz?: string) {
 	return `${formatDateToMMMDD(date, ianatz)} ${date.toLocaleString(ianatz, { year: "2-digit" })}`;
 }
+
+export function formatMilliseconds(milliseconds: number) {
+	const seconds = Math.floor((milliseconds / 1000) % 60);
+	const minutes = Math.floor((milliseconds / 1000 / 60) % 60);
+	const hours = Math.floor((milliseconds / 1000 / 60 / 60) % 24);
+	return { seconds, minutes, hours };
+}
+
+export function formatTimeText({ hours, minutes, seconds }: ReturnType<typeof formatMilliseconds>) {
+	let str = new Array<string>();
+	if (hours > 0) {
+		str.push(`${hours}${hours === 1 ? "hr" : "hrs"}`);
+	}
+	if (minutes > 0) {
+		str.push(`${minutes}${minutes === 1 ? "min" : "mins"}`);
+	}
+	if (seconds > 0) {
+		str.push(`${seconds}sec`);
+	}
+	return str.join(" ");
+}
+
+export function formatTimeTextFixed(
+	{ hours, minutes, seconds }: ReturnType<typeof formatMilliseconds>,
+	length: 1 | 2 | 3,
+) {
+	let str = new Array<string>();
+	if (hours > 0 || length === 3) {
+		if (length >= 1) {
+			str.push(`${String(hours).padStart(2, "0")}${hours === 1 ? "hr " : "hrs"}`);
+			length--;
+		}
+	}
+	if (minutes > 0 || length >= 2) {
+		if (length >= 1) {
+			str.push(`${String(minutes).padStart(2, "0")}${minutes === 1 ? "min " : "mins"}`);
+			length--;
+		}
+	}
+	if (seconds > 0 || length >= 1) {
+		if (length >= 1) {
+			str.push(`${String(seconds).padStart(2, "0")}sec`);
+			length--;
+		}
+	}
+	return str.join(" ");
+}

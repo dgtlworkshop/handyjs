@@ -123,3 +123,18 @@ export function numberToHashString(num: number, padding: number) {
 
 	return "#" + hex;
 }
+
+/**
+ * Linearly transitions from one RGB color to the other
+ * @param start Minimum color
+ * @param end Maximum Color
+ * @param t 0...1
+ * @returns Interpolated color
+ */
+export function lerpRGB(start: Readonly<RGB>, end: Readonly<RGB>, t: number) {
+	return {
+		r: start.r + (end.r - start.r) * t,
+		g: start.g + (end.g - start.g) * t,
+		b: start.b + (end.b - start.b) * t,
+	} satisfies RGB;
+}

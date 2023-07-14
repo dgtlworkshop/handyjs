@@ -1,3 +1,4 @@
+export * as Browser from "./browser.js";
 export * as Chrono from "./chrono.js";
 export * as Color from "./color.js";
 export * as Cron from "./cron.js";
