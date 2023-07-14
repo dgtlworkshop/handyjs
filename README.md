@@ -1,6 +1,6 @@
 # DGTL Handy JS 🖐
 
-A collection of handy functions and reference types used across DGTL's Javascript projects. All functions are as close to pure as they can get and are designed to run in the browser or NodeJs. No modules have top-level `await`. All 
+A collection of handy functions and reference types used across DGTL's Javascript projects. All functions are as close to pure as they can get and are designed to run in the browser or NodeJs. No modules have top-level `await`. All
 
 _"Because JavaScript doesn't really have a standard library"_
 

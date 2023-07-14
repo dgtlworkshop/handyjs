@@ -2,6 +2,7 @@
 node_modules
 /build
 /package
+/dist
 .env
 .env.*
 !.env.example
@@ -10,3 +11,4 @@ node_modules
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+tsconfig.tsbuildinfo
