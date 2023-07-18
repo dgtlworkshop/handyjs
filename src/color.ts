@@ -1,3 +1,13 @@
+/**
+ * Identifies that this `number` should behave like an **RGB** hexadecimal color.
+ * The alpha component should be treated as an additional number.
+ *
+ * This follows PIXI's color handling system: https://pixijs.download/v5.3.7/docs/PIXI.utils.html
+ *
+ * @example
+ * const black: ColorInteger = 0x000000;
+ * const red: ColorInteger = 0xFF0000;
+ */
 export type ColorInteger = number;
 
 export interface RGB {
@@ -17,7 +27,7 @@ export interface RGBA extends RGB {
 export interface HSL {
 	/** Floating point number between 0...1 (inclusive) */
 	h: number;
-	/** Floating point number between 0...1 (inclusive)* /
+	/** Floating point number between 0...1 (inclusive) */
 	s: number;
 	/** Floating point number between 0...1 (inclusive) */
 	l: number;
@@ -77,13 +87,13 @@ export function hashStringToHexString(hash_string: string) {
  * Assumes h, s, and l are contained in the set [0, 1] and
  * returns r, g, and b in the set [0, 255].
  *
- * @param   Number  h       The hue
- * @param   Number  s       The saturation
- * @param   Number  l       The lightness
- * @return  Array           The RGB representation
+ * @param h The hue
+ * @param s The saturation
+ * @param l The lightness
+ * @return The RGB representation
  */
 export function hslToRgb(h: number, s: number, l: number) {
-	let r, g, b;
+	let r: number, g: number, b: number;
 
 	if (s == 0) {
 		r = g = b = l; // achromatic
@@ -96,10 +106,10 @@ export function hslToRgb(h: number, s: number, l: number) {
 		b = hue2rgb(p, q, h - 1 / 3);
 	}
 
-	return [r, g, b];
+	return { r, g, b } satisfies RGB;
 }
 
-export function hue2rgb(p: number, q: number, t: number): ColorInteger {
+function hue2rgb(p: number, q: number, t: number): number {
 	if (t < 0) t += 1;
 	if (t > 1) t -= 1;
 	if (t < 1 / 6) return p + (q - p) * 6 * t;
@@ -112,7 +122,7 @@ export function hue2rgb(p: number, q: number, t: number): ColorInteger {
  * Converts a number to a hexidecimal string starting with a hash (ex `#AAFF00`)
  * @param num The number to convert
  * @param padding The minimum length of the string. Use `6` for a CSS hash string
- * @returns Hexidecimal string starting with a hash (ex `"#AAFF00"`)
+ * @returns Hexadecimal string starting with a hash (ex `"#AAFF00"`)
  */
 export function numberToHashString(num: number, padding: number) {
 	let hex = Number(num).toString(16);
@@ -136,5 +146,17 @@ export function lerpRGB(start: Readonly<RGB>, end: Readonly<RGB>, t: number) {
 		r: start.r + (end.r - start.r) * t,
 		g: start.g + (end.g - start.g) * t,
 		b: start.b + (end.b - start.b) * t,
+	} satisfies RGB;
+}
+
+/**
+ * Separates an RGB integer into its red, green, and blue parts.
+ * @param hex_rgb The RGB integer (ex: `0xFF0000` is red)
+ */
+export function rgbHexToParts(hex_rgb: ColorInteger) {
+	return {
+		r: (hex_rgb >> 16) & 0xff,
+		g: (hex_rgb >> 8) & 0xff,
+		b: hex_rgb & 0xff,
 	} satisfies RGB;
 }

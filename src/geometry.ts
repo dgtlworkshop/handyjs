@@ -148,3 +148,20 @@ export function scaleToFitRectangleWithinRectangle(
 		};
 	}
 }
+
+export function getRandomPositionWithinRectangle(
+	rectangle: Readonly<iRectangle> | Readonly<iPositionedRectangle>,
+	integer = false,
+) {
+	const point = {
+		x: Math.random() * rectangle.width + ((rectangle as iPositionedRectangle).x ?? 0),
+		y: Math.random() * rectangle.height + ((rectangle as iPositionedRectangle).y ?? 0),
+	} satisfies iVector2;
+
+	if (integer) {
+		point.x = Math.round(point.x);
+		point.y = Math.round(point.y);
+	}
+
+	return point;
+}
