@@ -1,17 +1,19 @@
 {
 	"name": "@dgtlworkshop/handyjs",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "A collection of handy functions and reference types used across DGTL's Javascript projects",
 	"type": "module",
 	"files": [
-		"dist"
+		"dist",
+		"src"
 	],
 	"types": "./dist/index.d.ts",
 	"module": "./dist/index.js",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"module": "./dist/index.js"
+			"import": "./dist/index.js",
+			"default": "./dist/index.js"
 		}
 	},
 	"scripts": {
@@ -28,8 +30,8 @@
 	"private": false,
 	"license": "MIT",
 	"devDependencies": {
-		"prettier": "^3.0.0",
-		"publint": "^0.1.16",
+		"prettier": "^3.0.1",
+		"publint": "^0.2.0",
 		"typescript": "^5.1.6"
 	},
 	"publishConfig": {

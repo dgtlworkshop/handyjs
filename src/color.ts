@@ -2,7 +2,7 @@
  * Identifies that this `number` should behave like an **RGB** hexadecimal color.
  * The alpha component should be treated as an additional number.
  *
- * This follows PIXI's color handling system: https://pixijs.download/v5.3.7/docs/PIXI.utils.html
+ * This follows PIXI's color handling system: https://pixijs.download/v5.3.7/docs/PIXI.utils.html#.hex2rgb
  *
  * @example
  * const black: ColorInteger = 0x000000;
