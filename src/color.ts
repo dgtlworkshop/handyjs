@@ -109,7 +109,7 @@ export function reduceAlphaRangeToFloat(alpha_255: number) {
  */
 export function hexStringToHashString(hex_string: string) {
 	if (isHex(hex_string)) {
-		return `#${hex_string.slice(2)}`;
+		return `#${hex_string.slice(2)}` satisfies ColorHash;
 	} else {
 		return undefined;
 	}
@@ -123,7 +123,7 @@ export function hexStringToHashString(hex_string: string) {
  */
 export function hashStringToHexString(hash_string: string) {
 	if (isHash(hash_string)) {
-		return `0x${hash_string.slice(1)}`.toUpperCase();
+		return `0x${hash_string.slice(1)}`.toUpperCase() as ColorHex;
 	} else {
 		return undefined;
 	}
@@ -163,7 +163,7 @@ function hue2rgb(p: number, q: number, t: number): number {
 	if (t < 1 / 6) return p + (q - p) * 6 * t;
 	if (t < 1 / 2) return q;
 	if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-	return p;
+	return p satisfies ColorInteger;
 }
 
 /**
@@ -179,7 +179,7 @@ export function numberToHashString(num: number, padding: number) {
 		hex = "0" + hex;
 	}
 
-	return "#" + hex;
+	return ("#" + hex) as ColorHash;
 }
 
 /**
