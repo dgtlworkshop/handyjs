@@ -33,6 +33,54 @@ export interface HSL {
 	l: number;
 }
 
+export type ColorHex = `0x${string}`;
+
+export type ColorHash = `#${string}`;
+
+export function isHex(value: unknown): value is ColorHex {
+	if (typeof value !== "string") return false;
+	return /^0x([0-9a-f]*)$/i.test(value);
+}
+
+export function isHash(value: unknown): value is ColorHash {
+	if (typeof value !== "string") return false;
+	return /^#([0-9a-f]*)$/i.test(value);
+}
+
+export function isInteger(value: unknown): value is ColorInteger {
+	if (typeof value !== "number") return false;
+	return true;
+}
+
+export function isRgb(value: unknown): value is RGB {
+	if (typeof value !== "object" || value === null) return false;
+	return (
+		"r" in value &&
+		typeof value.r === "number" &&
+		"g" in value &&
+		typeof value.g === "number" &&
+		"b" in value &&
+		typeof value.b === "number"
+	);
+}
+
+export function isRgba(value: unknown): value is RGBA {
+	if (!isRgb(value)) return false;
+	return "a" in value && typeof value.a === "number";
+}
+
+export function isHsl(value: unknown): value is HSL {
+	if (typeof value !== "object" || value === null) return false;
+	return (
+		"h" in value &&
+		typeof value.h === "number" &&
+		"s" in value &&
+		typeof value.s === "number" &&
+		"l" in value &&
+		typeof value.l === "number"
+	);
+}
+
 /**
  * @param hex_string Hexadecimal string formatted like `0xAAFF00`
  * @returns The numerical representation of it
@@ -60,8 +108,8 @@ export function reduceAlphaRangeToFloat(alpha_255: number) {
  * @returns A string formatted like `#AAFF00`
  */
 export function hexStringToHashString(hex_string: string) {
-	if (/^0x([0-9a-f]*)$/i.test(hex_string)) {
-		return `#${hex_string.slice(2)}`;
+	if (isHex(hex_string)) {
+		return `#${hex_string.slice(2)}` satisfies ColorHash;
 	} else {
 		return undefined;
 	}
@@ -74,8 +122,8 @@ export function hexStringToHashString(hex_string: string) {
  * @returns A color string formatted like `0xAAFF00` or undefined if invalid
  */
 export function hashStringToHexString(hash_string: string) {
-	if (/^#([0-9a-f]*)$/i.test(hash_string)) {
-		return `0x${hash_string.slice(1)}`.toUpperCase();
+	if (isHash(hash_string)) {
+		return `0x${hash_string.slice(1)}`.toUpperCase() as ColorHex;
 	} else {
 		return undefined;
 	}
@@ -115,7 +163,7 @@ function hue2rgb(p: number, q: number, t: number): number {
 	if (t < 1 / 6) return p + (q - p) * 6 * t;
 	if (t < 1 / 2) return q;
 	if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-	return p;
+	return p satisfies ColorInteger;
 }
 
 /**
@@ -131,7 +179,7 @@ export function numberToHashString(num: number, padding: number) {
 		hex = "0" + hex;
 	}
 
-	return "#" + hex;
+	return ("#" + hex) as ColorHash;
 }
 
 /**

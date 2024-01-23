@@ -142,6 +142,15 @@ export function fmod(numerator: number, denominator: number, precision = 8): num
 }
 
 /**
+ * Modulus operation. Unique from the remainder (`%`) operation with negative numbers.
+ * @returns The result of {@link n} mod {@link d}.
+ */
+export function mod(n: number, d: number): number {
+	return ((n % d) + d) % d;
+}
+
+
+/**
  * Transforms the {@link value} from one range to another, similar to [the `map()` function in Arduino](https://www.arduino.cc/reference/en/language/functions/math/map/).
  * @param value The number to map
  * @param from_low The lower bound of the {@link value}'s current range
