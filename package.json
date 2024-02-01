@@ -19,6 +19,11 @@
 			"types": "./dist/browser/index.d.ts",
 			"import": "./dist/browser/index.js",
 			"default": "./dist/browser/index.js"
+		},
+		"./server": {
+			"types": "./dist/server/index.d.ts",
+			"import": "./dist/server/index.js",
+			"default": "./dist/server/index.js"
 		}
 	},
 	"scripts": {

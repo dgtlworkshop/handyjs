@@ -30,3 +30,12 @@ Downloads.downloadFileFromBlob("myimage.jpg", "image/jpg", my_blob);
 
 Similarly, the **Server** module can only be imported in Node (or other compatible environments).
 
+```js
+import { Program } from "@dgtlworkshop/handyjs/server";
+
+if (Program.isMain(import.meta.url)) {
+	console.info("Hello World");
+} else {
+	// This file was imported, not the entrypoint
+}
+```
