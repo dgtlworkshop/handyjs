@@ -22,8 +22,11 @@ console.info("0.5 of 4 is equal to", Maths.mapRange(0.5, 0, 4, 0, 12), "of 12");
 The **Browser** module can only be imported in the browser due to using document APIs.
 
 ```js
-import { Browser } from "@dgtlworkshop/handyjs";
+import { Downloads } from "@dgtlworkshop/handyjs/browser";
 
 let my_blob = new Blob();
-Browser.downloadFileFromBlob("myimage.jpg", "image/jpg", my_blob);
+Downloads.downloadFileFromBlob("myimage.jpg", "image/jpg", my_blob);
 ```
+
+Similarly, the **Server** module can only be imported in Node (or other compatible environments).
+
