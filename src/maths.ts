@@ -149,7 +149,6 @@ export function mod(n: number, d: number): number {
 	return ((n % d) + d) % d;
 }
 
-
 /**
  * Transforms the {@link value} from one range to another, similar to [the `map()` function in Arduino](https://www.arduino.cc/reference/en/language/functions/math/map/).
  * @param value The number to map
