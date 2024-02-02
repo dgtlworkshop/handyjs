@@ -2,12 +2,12 @@
  * HACK: from https://github.com/webpack/webpack/discussions/14648#discussioncomment-1589272
  * 
  * @example
- * import { CorsWorker as Worker } from "./cors-worker.js";
+ * import { CorsWorker as Worker } from "@dgtlworkshop/handyjs";
 
 	// aliasing CorsWorker to Worker makes it statically analyzable
-	const corsWorker = new Worker(new URL("../worker.js", import.meta.url));
+	const cors_worker = new Worker(new URL("../worker.js", import.meta.url));
 	// tada!
-	const worker: Worker["worker"] = corsWorker.worker;
+	const worker: Worker["worker"] = cors_worker.worker;
  */
 export class CorsWorker {
 	public readonly worker: Worker;

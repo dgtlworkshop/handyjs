@@ -1,7 +1,7 @@
-export function arraysEqual<TLhs, Trhs>(
+export function arraysEqual<TLhs, TRhs>(
 	lhs: Readonly<ArrayLike<TLhs>>,
-	rhs: Readonly<ArrayLike<Trhs>>,
-) {
+	rhs: Readonly<ArrayLike<TRhs>>,
+): boolean {
 	if (lhs.length !== rhs.length) return false;
 	for (let index = 0; index < lhs.length; index++) {
 		if ((lhs[index] as any) !== (rhs[index] as any)) return false;
