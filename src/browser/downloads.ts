@@ -1,8 +1,4 @@
 /**
- * This module should only be imported in the Browser
- */
-
-/**
  * Saves the {@link data} Blob to the user's device
  * @warn This file should only be imported in the browser
  * @param filename The filename to present in the save dialog

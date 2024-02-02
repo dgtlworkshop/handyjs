@@ -1,4 +1,3 @@
-export * as Browser from "./browser.js";
 export * as Chrono from "./chrono.js";
 export * as Color from "./color.js";
 export * as Cron from "./cron.js";
@@ -8,5 +7,6 @@ export * as Equality from "./equality.js";
 export * as Geometry from "./geometry.js";
 export * as Maths from "./maths.js";
 export * as Measurement from "./measurement.js";
+export * as Strings from "./strings.js";
 export * as Urls from "./urls.js";
 export { CorsWorker } from "./workers.js";
