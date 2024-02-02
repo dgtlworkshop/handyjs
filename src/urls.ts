@@ -1,9 +1,28 @@
-export function isValidHttpUrl(text: string) {
+/**
+ * Returns if the provided {@link test_url} is a valid, fully qualified URL with an HTTP protocol
+ * @param test_url The url string to test
+ */
+export function isValidHttpUrl(test_url: URL | string | undefined): boolean {
+	if (!test_url) return false;
 	try {
-		const url = new URL(text);
+		const url = new URL(test_url);
 		return url.protocol.startsWith("http");
 	} catch (e) {
 		return false;
+	}
+}
+
+/**
+ * If the provided {@link test_url} is a valid, fully qualified URL with an HTTP protocol, returns the URL. Otherwise returns null.
+ * @param test_url The url string to test
+ */
+export function tryGetHttpUrl(test_url: URL | string | undefined): URL | null {
+	if (!test_url) return null;
+	try {
+		const url = new URL(test_url);
+		return url.protocol.startsWith("http") ? url : null;
+	} catch (e) {
+		return null;
 	}
 }
 
@@ -25,9 +44,10 @@ export function addQueriesToURL(
 }
 
 /**
- * Applies the {@link base} hostname and pathname to the target {@link new_url}, modifying the {@link new_url}
- * @param base
- * @param new_url
+ * Applies the {@link base} hostname and _base_ path to the target {@link new_url}, modifying the {@link new_url}
+ * @param base The url to take the hostname and path from
+ * @param new_url The url to modify and apply the hostname and _base_ path
+ * @returns The modified {@link new_url} (or new {@link URL} object)
  */
 export function mergeUrls(base: Readonly<URL>, new_url: URL | string) {
 	if (!(new_url instanceof URL)) new_url = new URL(new_url);
@@ -35,7 +55,12 @@ export function mergeUrls(base: Readonly<URL>, new_url: URL | string) {
 		new_url.hostname = base.hostname;
 	}
 	if (!new_url.pathname.startsWith(base.pathname)) {
-		new_url.pathname = base.pathname + new_url.pathname;
+		// Prevent double slashes in url
+		if (base.pathname.endsWith("/")) {
+			new_url.pathname = base.pathname.slice(0, -1) + new_url.pathname;
+		} else {
+			new_url.pathname = base.pathname + new_url.pathname;
+		}
 	}
 	return new_url;
 }
