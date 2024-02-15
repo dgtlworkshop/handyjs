@@ -2,25 +2,44 @@
  * Returns if the provided {@link test_url} is a valid, fully qualified URL with an HTTP protocol
  * @param test_url The url string to test
  */
-export function isValidHttpUrl(test_url: URL | string | undefined): boolean {
-	if (!test_url) return false;
-	try {
-		const url = new URL(test_url);
-		return url.protocol.startsWith("http");
-	} catch (e) {
-		return false;
-	}
+export function isValidHttpUrl(test_url: Readonly<URL> | string | undefined): boolean {
+	return Boolean(tryGetHttpUrl(test_url));
 }
 
 /**
  * If the provided {@link test_url} is a valid, fully qualified URL with an HTTP protocol, returns the URL. Otherwise returns null.
  * @param test_url The url string to test
  */
-export function tryGetHttpUrl(test_url: URL | string | undefined): URL | null {
+export function tryGetHttpUrl(test_url: Readonly<URL> | string | undefined): URL | null {
 	if (!test_url) return null;
 	try {
 		const url = new URL(test_url);
 		return url.protocol.startsWith("http") ? url : null;
+	} catch (e) {
+		return null;
+	}
+}
+
+/**
+ * Returns if the provided {@link test_url} is a valid, fully qualified URL that can be fetched as a resource. False on relative urls.
+ * @param test_url The url string to test
+ */
+export function isValidResourceUrl(test_url: Readonly<URL> | string | undefined): boolean {
+	return Boolean(tryGetResourceUrl(test_url));
+}
+
+/**
+ * If the provided {@link test_url} is a valid, fully qualified URL that can be fetched as a resource, returns the URL. Otherwise returns null.
+ * @param test_url The url string to test
+ */
+export function tryGetResourceUrl(test_url: Readonly<URL> | string | undefined): URL | null {
+	if (!test_url) return null;
+	try {
+		const url = new URL(test_url);
+		for (const test_protocol of ["http", "blob", "data", "file"]) {
+			if (url.protocol.startsWith(test_protocol)) return url;
+		}
+		return null;
 	} catch (e) {
 		return null;
 	}
