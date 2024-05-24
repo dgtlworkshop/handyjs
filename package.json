@@ -35,7 +35,8 @@
 	},
 	"author": {
 		"name": "Matthew Conto",
-		"email": "matthew@dgtlworkshop.com"
+		"email": "matthew@dgtlworkshop.com",
+		"url": "https://conto.dev"
 	},
 	"private": false,
 	"license": "MIT",

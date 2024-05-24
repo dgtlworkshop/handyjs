@@ -1,3 +1,6 @@
+/**
+ * Compares two arrays and checks if each element satisfies Javascript strict equality (`===`), and that the two arrays have the same length
+ */
 export function arraysEqual<TLhs, TRhs>(
 	lhs: Readonly<ArrayLike<TLhs>>,
 	rhs: Readonly<ArrayLike<TRhs>>,
