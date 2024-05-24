@@ -59,7 +59,7 @@ export function* range(start: number, stop = start, step = 1): Generator<number>
 			cause: step,
 		});
 	}
-	
+
 	if (step > 0) {
 		for (let i = start; i < stop; i += step) {
 			yield i;
