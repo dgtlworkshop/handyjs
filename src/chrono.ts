@@ -1,3 +1,5 @@
+import type { DeepReadonly } from "./data-structures.js";
+
 /**
  * Creates a promise that resolves once the specified timeout in {@link milliseconds} expires. Uses {@link setTimeout}.
  */
@@ -75,14 +77,27 @@ export function formatDateToMMMDDYY(date: Date, ianatz?: string) {
 	return `${formatDateToMMMDD(date, ianatz)} ${date.toLocaleString(ianatz, { year: "2-digit" })}`;
 }
 
-export function formatMilliseconds(milliseconds: number) {
-	const seconds = Math.floor((milliseconds / 1000) % 60);
-	const minutes = Math.floor((milliseconds / 1000 / 60) % 60);
-	const hours = Math.floor((milliseconds / 1000 / 60 / 60) % 24);
-	return { seconds, minutes, hours };
+/**
+ * Separates a time in milliseconds into discrete time elements
+ * @param total_milliseconds A time in milliseconds
+ */
+export function formatMilliseconds(total_milliseconds: number) {
+	const milliseconds = Math.floor(total_milliseconds % 1000);
+	const seconds = Math.floor((total_milliseconds / 1000) % 60);
+	const minutes = Math.floor((total_milliseconds / 1000 / 60) % 60);
+	const hours = Math.floor((total_milliseconds / 1000 / 60 / 60) % 24);
+	return { milliseconds, seconds, minutes, hours };
 }
 
-export function formatTimeText({ hours, minutes, seconds }: ReturnType<typeof formatMilliseconds>) {
+/**
+ * Takes the output of {@link formatMilliseconds} and transforms it into an english description of a duration
+ * @returns `XXhours YYmins ZZsec`
+ */
+export function formatTimeText({
+	hours,
+	minutes,
+	seconds,
+}: DeepReadonly<ReturnType<typeof formatMilliseconds>>) {
 	let str = new Array<string>();
 	if (hours > 0) {
 		str.push(`${hours}${hours === 1 ? "hr" : "hrs"}`);
@@ -120,4 +135,27 @@ export function formatTimeTextFixed(
 		}
 	}
 	return str.join(" ");
+}
+
+/**
+ * Formats a duration in seconds to a `:` colon seperated timestamp
+ * @param time_seconds Duration in seconds
+ * @returns `HH:MM:SS:MSMS`
+ */
+export function formatTimestampFromSeconds(
+	time_seconds: number,
+	{ show_ms = true }: { show_ms?: boolean } = {},
+) {
+	const { hours, minutes, seconds, milliseconds } = formatMilliseconds(time_seconds * 1000);
+	const segments = new Array<string>();
+	if (hours) segments.push(String(hours).padStart(2, "0"));
+	if (hours || minutes) segments.push(String(minutes).padStart(2, "0"));
+	if (hours || minutes || seconds) segments.push(String(seconds).padStart(2, "0"));
+	if (show_ms && (hours || minutes || seconds || milliseconds))
+		segments.push(String(milliseconds).padStart(4, "0"));
+	return segments.join(":") as
+		| `${number}`
+		| `${number}:${number}`
+		| `${number}:${number}:${number}`
+		| `${number}:${number}:${number}:${number}`;
 }

@@ -1,6 +1,6 @@
 {
 	"name": "@dgtlworkshop/handyjs",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"description": "A collection of handy functions and reference types used across DGTL's Javascript projects",
 	"type": "module",
 	"files": [
@@ -35,7 +35,8 @@
 	},
 	"author": {
 		"name": "Matthew Conto",
-		"email": "matthew@dgtlworkshop.com"
+		"email": "matthew@dgtlworkshop.com",
+		"url": "https://conto.dev"
 	},
 	"private": false,
 	"license": "MIT",
