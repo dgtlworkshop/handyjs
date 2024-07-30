@@ -8,5 +8,6 @@ export * as Geometry from "./geometry.js";
 export * as Maths from "./maths.js";
 export * as Measurement from "./measurement.js";
 export * as Strings from "./strings.js";
+export * as Timeouts from "./timeouts.js";
 export * as Urls from "./urls.js";
 export { CorsWorker } from "./workers.js";
