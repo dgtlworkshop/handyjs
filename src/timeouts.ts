@@ -21,35 +21,36 @@ export function resettable(start: () => void, finish: () => void, ms?: number) {
 		if (once) once();
 		once = undefined;
 	}
-	/**
-	 * Resets the timeout, immediately calling {@link start}.
-	 * @param callback Runs once after {@link finish}.
-	 * @param ms The duration of the timeout.
-	 * @returns Returns the timeout ID.
-	 */
-	function reset(callback?: () => void, ms?: number): Timeout {
-		clearTimeout(id);
-		start();
-		once = callback;
-		id = setTimeout(run, ms ?? default_ms);
-		return id;
-	}
-	/**
-	 * Completes the timeout if it has not already completed, calling {@link finish}.
-	 */
-	function complete(): void {
-		if (id === undefined) return;
-		clearTimeout(id);
-		run();
-	}
-	/**
-	 * Clears the current timeout, ignoring any callbacks.
-	 */
-	function clear(): void {
-		clearTimeout(id);
-		once = undefined;
-	}
-	return { reset, complete, clear } as const;
+	return {
+		/**
+		 * Resets the timeout, immediately calling {@link start}.
+		 * @param callback Runs once after {@link finish}.
+		 * @param ms The duration of the timeout.
+		 * @returns Returns the timeout ID.
+		 */
+		reset(this: void, callback?: () => void, ms?: number): Timeout {
+			clearTimeout(id);
+			start();
+			once = callback;
+			id = setTimeout(run, ms ?? default_ms);
+			return id;
+		},
+		/**
+		 * Completes the timeout if it has not already completed, calling {@link finish}.
+		 */
+		complete(this: void): void {
+			if (id === undefined) return;
+			clearTimeout(id);
+			run();
+		},
+		/**
+		 * Clears the current timeout, ignoring any callbacks.
+		 */
+		clear(this: void): void {
+			clearTimeout(id);
+			once = undefined;
+		},
+	};
 }
 
 /**
@@ -61,24 +62,25 @@ export function resettable(start: () => void, finish: () => void, ms?: number) {
 export function repeatable<TArgs extends any[]>(callback: Callback<TArgs>, ms?: number) {
 	let id: Timeout | undefined;
 	const default_ms = ms;
-	/**
-	 * Clears the current timeout and starts a new one.
-	 * @param ms The duration of the new timeout.
-	 * @param args Arguments to pass when the callback is called.
-	 * @returns Returns the new timeout's ID.
-	 */
-	function reset(ms?: number, ...args: TArgs): Timeout {
-		clearTimeout(id);
-		id = setTimeout(callback, ms ?? default_ms, ...args);
-		setTimeout(callback, ms);
-		return id;
-	}
-	/**
-	 * Clears the current timeout.
-	 */
-	function clear(): void {
-		clearTimeout(id);
-		id = undefined;
-	}
-	return { reset, clear } as const;
+	return {
+		/**
+		 * Clears the current timeout and starts a new one.
+		 * @param ms The duration of the new timeout.
+		 * @param args Arguments to pass when the callback is called.
+		 * @returns Returns the new timeout's ID.
+		 */
+		reset(this: void, ms?: number, ...args: TArgs): Timeout {
+			clearTimeout(id);
+			id = setTimeout(callback, ms ?? default_ms, ...args);
+			setTimeout(callback, ms);
+			return id;
+		},
+		/**
+		 * Clears the current timeout.
+		 */
+		clear(this: void): void {
+			clearTimeout(id);
+			id = undefined;
+		},
+	};
 }
