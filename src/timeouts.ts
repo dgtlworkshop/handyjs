@@ -72,7 +72,6 @@ export function repeatable<TArgs extends any[]>(callback: Callback<TArgs>, ms?: 
 		reset(this: void, ms?: number, ...args: TArgs): Timeout {
 			clearTimeout(id);
 			id = setTimeout(callback, ms ?? default_ms, ...args);
-			setTimeout(callback, ms);
 			return id;
 		},
 		/**
