@@ -4,12 +4,12 @@ import type { DeepReadonly } from "./data-structures.js";
  * Creates a promise that resolves once the specified timeout in {@link milliseconds} expires. Uses {@link setTimeout}.
  */
 export function timeout(milliseconds: number) {
-	return new Promise((resolve) => setTimeout(resolve, milliseconds));
+	return new Promise<void>((resolve) => setTimeout(resolve, milliseconds));
 }
 
 /**
  * Creates a promise that resolves at the next frame. Uses {@link requestAnimationFrame}.
- * @warn When used in NodeJS, this uses {@link timeout} instead due to a lack of {@link requestAnimationFrame}.
+ * @warn When used in NodeJS, this uses {@link timeout} with 1/60th of a second instead due to a lack of {@link requestAnimationFrame}.
  */
 export function frame() {
 	if ("requestAnimationFrame" in globalThis) {
