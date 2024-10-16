@@ -1,0 +1,3 @@
+engine-strict=true
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+@dgtlworkshop:registry=https://npm.pkg.github.com
