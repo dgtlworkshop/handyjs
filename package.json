@@ -1,6 +1,6 @@
 {
 	"name": "@dgtlworkshop/handyjs",
-	"version": "1.7.0",
+	"version": "1.7.1",
 	"description": "A collection of handy functions and reference types used across DGTL's Javascript projects",
 	"type": "module",
 	"files": [
