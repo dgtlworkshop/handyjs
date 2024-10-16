@@ -3,6 +3,7 @@ export * as Color from "./color.js";
 export * as Cron from "./cron.js";
 export * as Css from "./css.js";
 export * as DataStructures from "./data-structures.js";
+export type { DeepReadonly, DeepReadonlyArray, DeepReadonlyObject } from "./data-structures.js";
 export * as Equality from "./equality.js";
 export * as Geometry from "./geometry.js";
 export * as Maths from "./maths.js";
