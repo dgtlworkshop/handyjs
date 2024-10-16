@@ -6,7 +6,7 @@ export function pickRandomFromArray<T>(array: ReadonlyArray<T>): T {
 }
 
 /**
- * Marks every property of a type as readonly. Helpful for indicating immutability, but not perfect.
+ * Marks every property of a type as `readonly`. Helpful for indicating immutability without applying the runtime cost of [using `Object.freeze(...)` to recursively apply to all children](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze#deep_freezing).
  */
 export type DeepReadonly<T> = T extends (infer R)[]
 	? DeepReadonlyArray<R>
