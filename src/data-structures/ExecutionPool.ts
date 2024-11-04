@@ -42,7 +42,7 @@ export class ExecutionPool<TReturn = any> {
 				// Run the task and await for it
 				const result = await task.run();
 				try {
-					// If it's successfull, we call a callback function onSuccess.
+					// If it's successful, we call a callback function onSuccess.
 					// This function can be used for example to save the result to a database,
 					// print something, or do nothing if not needed.
 					await task.onSuccess(result);
@@ -62,13 +62,16 @@ export class ExecutionPool<TReturn = any> {
 	 * @returns The results of the tasks. If a task failed, the array item will be `undefined`.
 	 */
 	async run() {
-		const tasks = this.tasks;
+		// Copy tasks into an iterator, clearing the stored tasks.
+		const iterator = new Array(...this.tasks).entries();
 		this.tasks.length = 0;
-		const iterator = tasks.entries();
-		const promises = new Array(this.concurrency).fill(iterator).map(this.executeTasks);
+		// For each concurrency, run 'executeTasks' until iterator is complete.
+		// Tasks are consumed by progressing the shared iterator.
+		const promises = new Array<typeof iterator>(this.concurrency)
+			.fill(iterator)
+			.map(this.executeTasks);
 		const results = await Promise.allSettled(promises);
-
-		// Unpack the results from the allSettled object
+		// Unpack the results.
 		return results.flatMap((result) => (result.status === "fulfilled" ? result.value : undefined));
 	}
 }
